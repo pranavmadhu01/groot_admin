@@ -39,8 +39,7 @@ export function DashboardNavbar() {
     <Navbar height={"100%"} width={{ sm: 300 }} p="md">
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
-          {/* <MantineLogo size={28} /> */}
-          <Image src="/assets/images/logo.png" height={50} width={'auto'}/>
+          <Image src="/assets/images/logo.png" height={50} width={"auto"} />
           <Code sx={{ fontWeight: 700 }}>v0.0</Code>
         </Group>
         {links}
