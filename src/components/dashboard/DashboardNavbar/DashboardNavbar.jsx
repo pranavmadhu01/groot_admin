@@ -5,6 +5,7 @@ import {
   IconLogout,
   IconLeaf,
   IconMoneybag,
+  IconVirusSearch,
 } from "@tabler/icons-react";
 
 import { dashboardNavbarStyle } from "./dashboardnavbar.styles";
@@ -13,6 +14,7 @@ const data = [
   { link: "/dashboard", label: "Analytics", icon: IconChartHistogram },
   { link: "/dashboard/plant", label: "Plants", icon: IconLeaf },
   { link: "/dashboard/fertilizer", label: "Fertilizers", icon: IconMoneybag },
+  { link: "/dashboard/diseases", label: "Diseases", icon: IconVirusSearch },
 ];
 export function DashboardNavbar() {
   const { classes, cx } = dashboardNavbarStyle();
