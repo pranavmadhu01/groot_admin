@@ -6,6 +6,7 @@ const addFertilizerCardStyle = createStyles((theme) => ({
     cursor: "pointer",
   },
   card: {
+    width: "100%",
     padding: 24,
     paddingVertical: 32,
     backgroundColor: "#9ECC66",

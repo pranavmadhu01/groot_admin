@@ -12,23 +12,25 @@ export default function AddFertilizerForm({ opened, close }) {
     validate: {
       name: (value) =>
         value.length < 2 ? "Name must have at least 3 letters" : null,
-      price: (value) => (value < 0 ? "Cannot have negative values" : null),
+      price: (value) =>
+        value <= 0 ? "Cannot have negative or 0 as the value" : null,
     },
   });
 
   return (
-    <Modal opened={opened} onClose={close}>
+    <Modal opened={opened} onClose={close} title="Add fertilizer" centered>
       <form
         maw={320}
         mx="auto"
         onSubmit={form.onSubmit(() => {
           console.log(form.values);
-          addFertilizer(form.values).then((response) =>
+          addFertilizer(form.values).then((response) => {
             notifications.show({
               title: "success",
               message: response.data.message,
-            })
-          );
+            });
+            close();
+          });
           // .catch((error)=>);
         })}
       >
