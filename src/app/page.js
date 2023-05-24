@@ -1,3 +1,4 @@
+"use client";
 import { HomeHeader } from "@/components/home/Homeheader/Homeheader";
 
 export default function Home() {

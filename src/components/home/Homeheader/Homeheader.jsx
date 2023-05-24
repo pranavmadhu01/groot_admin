@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { Header, Container, Group, Burger, Image, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";

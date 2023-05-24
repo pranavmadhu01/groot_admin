@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { Navbar, Group, Code, Image } from "@mantine/core";
 import {
@@ -9,30 +8,31 @@ import {
 } from "@tabler/icons-react";
 
 import { dashboardNavbarStyle } from "./dashboardnavbar.styles";
+import Link from "next/link";
 const data = [
-  { link: "", label: "Analytics", icon: IconChartHistogram },
-  { link: "", label: "Plants", icon: IconLeaf },
-  { link: "", label: "Fertilizers", icon: IconMoneybag },
+  { link: "/dashboard", label: "Analytics", icon: IconChartHistogram },
+  { link: "/dashboard/plant", label: "Plants", icon: IconLeaf },
+  { link: "/dashboard/fertilizer", label: "Fertilizers", icon: IconMoneybag },
 ];
 export function DashboardNavbar() {
   const { classes, cx } = dashboardNavbarStyle();
   const [active, setActive] = useState("Analytics");
 
   const links = data.map((item) => (
-    <a
+    <Link
       className={cx(classes.link, {
         [classes.linkActive]: item.label === active,
       })}
+      t
       href={item.link}
       key={item.label}
-      onClick={(event) => {
-        event.preventDefault();
+      onClick={() => {
         setActive(item.label);
       }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>
-    </a>
+    </Link>
   ));
 
   return (
@@ -46,14 +46,10 @@ export function DashboardNavbar() {
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <a
-          href="#"
-          className={classes.link}
-          onClick={(event) => event.preventDefault()}
-        >
+        <Link href="/" className={classes.link}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
-        </a>
+        </Link>
       </Navbar.Section>
     </Navbar>
   );
