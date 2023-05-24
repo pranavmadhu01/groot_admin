@@ -1,7 +1,8 @@
 "use client";
 import DashboardHeader from "@/components/dashboard/DashboardHeader/DashboardHeader";
 import { DashboardNavbar } from "@/components/dashboard/DashboardNavbar/DashboardNavbar";
-import { Container, Flex } from "@mantine/core";
+import { Flex } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 
 export default function DashboardLayout({ children }) {
   return (
@@ -26,6 +27,7 @@ export default function DashboardLayout({ children }) {
           {children}
         </div>
       </Flex>
+      <Notifications />
     </Flex>
   );
 }
