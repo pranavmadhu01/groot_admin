@@ -1,6 +1,7 @@
 const { default: axios } = require("axios");
 const url = process.env.BACKEND_URL || "http://localhost:8000";
 const fertilizerUrl = `${url}/fertilizer`;
+const plantUrl = `${url}/plant`;
 const diseaseUrl = `${url}/disease`;
 
 //fertilizer apis
@@ -20,3 +21,16 @@ const addDisease = async (data) => {
 };
 
 export { getAllFertilzers, addFertilizer, getAllDiseases, addDisease };
+
+//plant apis
+const addANewPlant = async (data) => {
+  return await axios.post(plantUrl, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+const getAllPlants = async () => {
+  return await axios.get(plantUrl);
+};
+export { addANewPlant, getAllPlants };

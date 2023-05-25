@@ -6,7 +6,7 @@ import {
   Drawer,
   FileInput,
 } from "@mantine/core";
-import { addFertilizer } from "@/api";
+import { addANewPlant, addFertilizer } from "@/api";
 import { notifications } from "@mantine/notifications";
 export default function AddPlantDrawer({ opened, close }) {
   const form = useForm({
@@ -31,7 +31,10 @@ export default function AddPlantDrawer({ opened, close }) {
         maw={320}
         mx="auto"
         onSubmit={form.onSubmit(() => {
-          console.log(form.values);
+          addANewPlant(form.values).then((response) => {
+            notifications.show(response.data.message);
+            close();
+          });
         })}
       >
         <TextInput
@@ -74,7 +77,7 @@ export default function AddPlantDrawer({ opened, close }) {
             paddingHorizontal: 30,
           }}
         >
-          Add Fertilizer
+          Add Plant
         </Button>
       </form>
     </Drawer>
