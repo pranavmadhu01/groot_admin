@@ -3,9 +3,9 @@ import AddCard from "@/components/cards/AddCard/AddCard";
 import { SimpleGrid } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
-import { getAllFertilzers } from "@/api";
+import { getAllDiseases } from "@/api";
 import DisplayCard from "@/components/cards/DisplayCard/DisplayCard";
-import AddFertilizerDrawer from "@/components/drawers/AddFertilizerDrawer/AddFertilizerDrawer";
+import AddDiseaseDrawer from "@/components/drawers/AddDiseaseDrawer/AddDiseaseDrawer";
 
 export default function Diseases() {
   const [opened, { open, close, toggle }] = useDisclosure(false);
@@ -16,11 +16,13 @@ export default function Diseases() {
 
   return (
     <SimpleGrid cols={3}>
-      {diseases.map(({ name, price, _id }) => (
-        <DisplayCard subtitle={price} title={name} key={_id} />
-      ))}
-      <AddDiseasesDrawer opened={opened} close={close} />
-      <AddCard onClick={open} />
+      {diseases.map(
+        ({ name, description, image, symptoms, precautions, type, _id }) => (
+          <DisplayCard subtitle={type} title={name} key={_id} />
+        )
+      )}
+      <AddDiseaseDrawer opened={opened} close={close} />
+      <AddCard onClick={open} name={'Add Disease'} />
     </SimpleGrid>
   );
 }

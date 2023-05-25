@@ -1,11 +1,5 @@
 import { useForm } from "@mantine/form";
-import {
-  TextInput,
-  Button,
-  NumberInput,
-  Drawer,
-  FileInput,
-} from "@mantine/core";
+import { TextInput, Button, Drawer, FileInput } from "@mantine/core";
 import { addFertilizer } from "@/api";
 import { notifications } from "@mantine/notifications";
 
@@ -13,16 +7,26 @@ export default function AddDiseaseDrawer({ opened, close }) {
   const form = useForm({
     initialValues: {
       name: "",
-      image: "",
       description: "",
-      symtoms: [],
+      image: "",
+      symptoms: [],
       precautions: [],
+      type: "",
     },
     validate: {
       name: (value) =>
-        value.length < 2 ? "Name must have at least 3 letters" : null,
+        value.length < 2 ? "Name must have at least 3 characters" : null,
       description: (value) =>
-        value.length < 10 ? "Description must have at least 10 letters" : null,
+        value.length < 50
+          ? "Description must have at least 50 characters"
+          : null,
+      image: (value) => (value === undefined ? "Must select an image" : null),
+      symtoms: (value) =>
+        value.length < 3 ? "Enter atleast 3 symptoms" : null,
+      precautions: (value) =>
+        value.length < 3 ? "Enter atleast 3 precautions" : null,
+      type: (value) =>
+        value.length < 50 ? "Type must have atleast 3 characters" : null,
     },
   });
 
@@ -38,7 +42,7 @@ export default function AddDiseaseDrawer({ opened, close }) {
         mx="auto"
         onSubmit={form.onSubmit(() => {
           console.log(form.values);
-          addFertilizer(form.values).then((response) => {
+          addNewDiseases(form.values).then((response) => {
             notifications.show({
               title: "success",
               message: response.data.message,
@@ -65,7 +69,25 @@ export default function AddDiseaseDrawer({ opened, close }) {
           placeholder="Pick an image"
           label="Disease Image"
           accept="image/png,image/jpeg,image/jpg,image/webp"
+          {...form.getInputProps("image")}
         />
+
+        <Button
+          variant="outline"
+          type="button"
+          style={{
+            marginTop: 30,
+            marginBottom: 50,
+            color: "white",
+            backgroundColor: "green",
+            border: "none",
+            borderRadius: 15,
+            paddingVertical: 10,
+            paddingHorizontal: 30,
+          }}
+        >
+          Add Symptoms
+        </Button>
 
         <Button
           variant="outline"

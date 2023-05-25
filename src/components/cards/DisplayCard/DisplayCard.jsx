@@ -4,7 +4,7 @@ import {
 } from "@mantine/core";
 import { displayCardStyle } from "./displaycard.styles";
 
-export default function DisplayCard({ title, subtitle }) {
+export default function DisplayCard({ title, subtitle, isPrice }) {
   const { classes, theme } = displayCardStyle();
 
   return (
