@@ -1,5 +1,11 @@
 import { useForm } from "@mantine/form";
-import { TextInput, Button, NumberInput, Drawer } from "@mantine/core";
+import {
+  TextInput,
+  Button,
+  NumberInput,
+  Drawer,
+  FileInput,
+} from "@mantine/core";
 import { addFertilizer } from "@/api";
 import { notifications } from "@mantine/notifications";
 export default function AddPlantDrawer({ opened, close }) {
@@ -48,12 +54,11 @@ export default function AddPlantDrawer({ opened, close }) {
           placeholder="Enter the default pH value"
           {...form.getInputProps("defaultph")}
         />
-        <NumberInput
-          withAsterisk
+        <FileInput
           mt="md"
-          label="Price per kg"
-          placeholder="Enter the price"
-          {...form.getInputProps("price")}
+          placeholder="Pick Image"
+          label="Plant Image"
+          {...form.getInputProps("image")}
         />
         <Button
           variant="outline"

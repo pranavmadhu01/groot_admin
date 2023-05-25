@@ -8,7 +8,7 @@ export default function AddCard({ name, onClick }) {
     <Flex className={classes.header} onClick={onClick}>
       <Flex className={classes.card}>
         <Text fz="lg" fw={500}>
-          Add Fertilizer
+          {name}
         </Text>
         <IconSquareRoundedPlusFilled />
       </Flex>
