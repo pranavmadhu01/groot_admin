@@ -15,23 +15,12 @@ export default function Diseases() {
   }, [opened]);
 
   return (
-<<<<<<< HEAD
-    <SimpleGrid cols={3}>
-      {diseases.map(
-        ({ name, description, image, symptoms, precautions, type, _id }) => (
-          <DisplayCard subtitle={type} title={name} key={_id} />
-        )
-      )}
+    <SimpleGrid cols={3} mah="100%" style={{ overflow: "auto" }}>
+      {diseases.map(({ name, description, image, symptoms, precautions, type, _id }) => (
+        <DisplayCard subtitle={type} title={name} key={_id} />
+      ))}
       <AddDiseaseDrawer opened={opened} close={close} />
       <AddCard onClick={open} name={'Add Disease'} />
-=======
-    <SimpleGrid cols={3} mah="100%" style={{ overflow: "auto" }}>
-      {diseases.map(({ name, price, _id }) => (
-        <DisplayCard subtitle={price} title={name} key={_id} />
-      ))}
-      <AddDiseasesDrawer opened={opened} close={close} />
-      <AddCard onClick={open} />
->>>>>>> ab92d80106f213b247cc0105553911cdcb867ded
     </SimpleGrid>
   );
 }
