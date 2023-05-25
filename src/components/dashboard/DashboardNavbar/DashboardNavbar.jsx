@@ -38,7 +38,7 @@ export function DashboardNavbar() {
   ));
 
   return (
-    <Navbar height={"100%"} width={{ sm: 300 }} p="md">
+    <Navbar height={"100%"} width={{ sm: 300 }} style={{ zIndex: 0 }} p="md">
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
           <Image src="/assets/images/logo.png" height={50} width={"auto"} />

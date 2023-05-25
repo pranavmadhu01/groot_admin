@@ -1,9 +1,9 @@
 import { useForm } from "@mantine/form";
-import { TextInput, Button, Modal, NumberInput } from "@mantine/core";
+import { TextInput, Button, NumberInput, Drawer } from "@mantine/core";
 import { addFertilizer } from "@/api";
 import { notifications } from "@mantine/notifications";
 
-export default function AddFertilizerForm({ opened, close }) {
+export default function AddFertilizerDrawer({ opened, close }) {
   const form = useForm({
     initialValues: {
       name: "",
@@ -18,7 +18,12 @@ export default function AddFertilizerForm({ opened, close }) {
   });
 
   return (
-    <Modal opened={opened} onClose={close} title="Add fertilizer" centered>
+    <Drawer
+      opened={opened}
+      onClose={close}
+      title="ADD FERTILIZER"
+      position="right"
+    >
       <form
         maw={320}
         mx="auto"
@@ -64,6 +69,6 @@ export default function AddFertilizerForm({ opened, close }) {
           Add Fertilizer
         </Button>
       </form>
-    </Modal>
+    </Drawer>
   );
 }
