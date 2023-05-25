@@ -1,4 +1,4 @@
-import { Card, Image, Text, Badge, Button, Group } from "@mantine/core";
+import { Card, Image, Text, Badge, Button, Group, Flex } from "@mantine/core";
 
 export default function PhotoCard({
   image,
@@ -24,17 +24,38 @@ export default function PhotoCard({
           "Default pH : "{defaultph}
         </Badge>
       </Group>
-
-      <Button
-        variant="light"
-        color="blue"
-        fullWidth
-        mt="md"
-        radius="md"
-        onClick={onCLick}
-      >
-        View Timeline
-      </Button>
+      <Flex gap={5}>
+        <Button
+          variant="light"
+          color="blue"
+          fullWidth
+          mt="md"
+          radius="md"
+          onClick={onCLick}
+        >
+          View Timeline
+        </Button>
+        <Button
+          variant="light"
+          color="green"
+          fullWidth
+          mt="md"
+          radius="md"
+          onClick={onCLick}
+        >
+          Edit
+        </Button>
+        <Button
+          variant="light"
+          color="red"
+          fullWidth
+          mt="md"
+          radius="md"
+          onClick={onCLick}
+        >
+          Delete
+        </Button>
+      </Flex>
     </Card>
   );
 }

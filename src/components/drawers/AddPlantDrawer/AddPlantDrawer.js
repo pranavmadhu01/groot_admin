@@ -5,10 +5,13 @@ import {
   NumberInput,
   Drawer,
   FileInput,
+  LoadingOverlay,
 } from "@mantine/core";
 import { addANewPlant, addFertilizer } from "@/api";
 import { notifications } from "@mantine/notifications";
+import { useDisclosure } from "@mantine/hooks";
 export default function AddPlantDrawer({ opened, close }) {
+  const [visible, { toggle }] = useDisclosure(false);
   const form = useForm({
     initialValues: {
       name: "",
@@ -22,15 +25,19 @@ export default function AddPlantDrawer({ opened, close }) {
       seedrate: (value) =>
         value <= 0 ? "Cannot have negative or 0 as the value" : null,
       defaultph: (value) =>
-        value <= 0 ? "Cannot have negative or 0 as the value" : null,
+        value <= 0 || value > 14
+          ? "pH value should be in the range 0 - 14"
+          : null,
     },
   });
   return (
     <Drawer opened={opened} onClose={close} title="ADD PLANT" position="right">
+      <LoadingOverlay visible={visible} overlayBlur={2} />
       <form
         maw={320}
         mx="auto"
         onSubmit={form.onSubmit(() => {
+          toggle();
           addANewPlant(form.values).then((response) => {
             notifications.show(response.data.message);
             close();

@@ -25,18 +25,20 @@ export default function Plant() {
       });
   }, [opened]);
   return (
-    <SimpleGrid cols={3}>
-      {plants.map(({ name, defaultph, image, seedrate, _id }) => (
-        <PhotoCard
-          defaultph={defaultph}
-          image={image}
-          name={name}
-          seedrate={seedrate}
-          key={_id}
-        />
-      ))}
-      <AddPlantDrawer opened={opened} close={close} />
+    <SimpleGrid cols={3} mah="100%" style={{ overflow: "auto" }}>
       <AddCard name="Add Plant" onClick={open} />
+      {plants
+        .map(({ name, defaultph, image, seedrate, _id }) => (
+          <PhotoCard
+            defaultph={defaultph}
+            image={image}
+            name={name}
+            seedrate={seedrate}
+            key={_id}
+          />
+        ))
+        .reverse()}
+      <AddPlantDrawer opened={opened} close={close} />
     </SimpleGrid>
   );
 }
