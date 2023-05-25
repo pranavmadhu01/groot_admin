@@ -1,9 +1,9 @@
 import { Flex, Text } from "@mantine/core";
-import { addFertilizerCardStyle } from "./addcard.styles";
+import { addCardStyle } from "./addcard.styles";
 import { IconSquareRoundedPlusFilled } from "@tabler/icons-react";
 
-export default function AddFertilizerCard({ name, onClick }) {
-  const { classes, cx } = addFertilizerCardStyle();
+export default function AddCard({ name, onClick }) {
+  const { classes, cx } = addCardStyle();
   return (
     <Flex className={classes.header} onClick={onClick}>
       <Flex className={classes.card}>
