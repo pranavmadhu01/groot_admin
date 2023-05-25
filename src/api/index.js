@@ -16,11 +16,15 @@ const addFertilizer = async (data) => {
 const getAllDiseases = async () => {
   return await axios.get(diseaseUrl);
 };
-const addDisease = async (data) => {
-  return await axios.post(diseaseUrl, data);
+const addNewDiseases = async (data) => {
+  return await axios.post(diseaseUrl, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
-export { getAllFertilzers, addFertilizer, getAllDiseases, addDisease };
+export { getAllFertilzers, addFertilizer, getAllDiseases, addNewDiseases };
 
 //plant apis
 const addANewPlant = async (data) => {

@@ -1,19 +1,46 @@
 import { useForm } from "@mantine/form";
 import {
   TextInput,
-  Button,
-  NumberInput,
+  Flex,
   Drawer,
   FileInput,
   LoadingOverlay,
 } from "@mantine/core";
-import { addFertilizer } from "@/api";
+import { addNewDiseases } from "@/api";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import CustomButton from "@/components/elements/CustomButton";
+import AddSymptomDrawer from "./AddSymptomDrawer";
+import AddPrecautionDrawer from "./AddPrecautionDrawer";
+import { useState } from "react";
 
 export default function AddDiseaseDrawer({ opened, close }) {
   const [visible, { toggle }] = useDisclosure(false);
+
+  const [symptoms, setSymptoms] = useState([]);
+  const [symptomDrawerOpened, setSymptomDrawerOpened] = useState(false);
+
+  const openSymptomDrawer = () => {
+    setSymptomDrawerOpened(true);
+  };
+  const closeSymptomDrawer = (addedSymptoms) => {
+    setSymptoms(addedSymptoms);
+    form.setFieldValue("symptoms", addedSymptoms);
+    setSymptomDrawerOpened(false);
+  };
+
+  const [precautions, setPrecautions] = useState([]);
+  const [precautionDrawerOpened, setPrecautionDrawerOpened] = useState(false);
+
+  const openPrecautionDrawer = () => {
+    setPrecautionDrawerOpened(true);
+  };
+  const closePrecautionDrawer = (addedPrecautions) => {
+    setPrecautions(addedPrecautions);
+    form.setFieldValue("precautions", addedPrecautions);
+    setPrecautionDrawerOpened(false);
+  };
+
   const form = useForm({
     initialValues: {
       name: "",
@@ -27,14 +54,10 @@ export default function AddDiseaseDrawer({ opened, close }) {
       name: (value) =>
         value.length < 2 ? "Name must have at least 3 characters" : null,
       description: (value) =>
-        value.length < 50
-          ? "Description must have at least 50 characters"
+        value.length < 10
+          ? "Description must have at least 10 characters"
           : null,
       image: (value) => (value === undefined ? "Must select an image" : null),
-      symtoms: (value) =>
-        value.length < 3 ? "Enter atleast 3 symptoms" : null,
-      precautions: (value) =>
-        value.length < 3 ? "Enter atleast 3 precautions" : null,
       type: (value) =>
         value.length < 50 ? "Type must have atleast 3 characters" : null,
     },
@@ -54,7 +77,7 @@ export default function AddDiseaseDrawer({ opened, close }) {
         onSubmit={form.onSubmit(() => {
           console.log(form.values);
           toggle();
-          addFertilizer(form.values).then((response) => {
+          addNewDiseases(form.values).then((response) => {
             notifications.show({
               title: "success",
               message: response.data.message,
@@ -67,6 +90,7 @@ export default function AddDiseaseDrawer({ opened, close }) {
           withAsterisk
           label="Disease Name"
           placeholder="Enter the disease name"
+          mb={20}
           {...form.getInputProps("name")}
         />
 
@@ -74,6 +98,7 @@ export default function AddDiseaseDrawer({ opened, close }) {
           withAsterisk
           label="Description"
           placeholder="Enter the disease description"
+          mb={20}
           {...form.getInputProps("description")}
         />
 
@@ -81,22 +106,50 @@ export default function AddDiseaseDrawer({ opened, close }) {
           placeholder="Pick an image"
           label="Disease Image"
           accept="image/png,image/jpeg,image/jpg,image/webp"
+          mb={20}
           {...form.getInputProps("image")}
         />
 
-        <CustomButton
-          variant={"outline"}
-          color={'green'}
-          borderColor={'green'}
-          label={"Add Symptoms"}
-        />
+        <Flex direction={"column"} gap={20}>
+          <Flex justify={"center"} gap={10} my={10}>
+            <CustomButton
+              label={"Add Symptoms"}
+              variant={"outline"}
+              color={"green"}
+              borderColor={"green"}
+              width={"100%"}
+              onClick={openSymptomDrawer}
+            />
+            <CustomButton
+              label={"Add Precautions"}
+              variant={"outline"}
+              color={"green"}
+              borderColor={"green"}
+              width={"100%"}
+              onClick={openPrecautionDrawer}
+            />
+          </Flex>
 
-        <CustomButton
-          variant={"filled"}
-          label={"Add Fertilizer"}
-          backgroundColor={"green"}
-        />
+          <CustomButton
+            type={"submit"}
+            label={"Add Disease"}
+            variant={"filled"}
+            backgroundColor={"green"}
+            width={"100%"}
+            height={60}
+          />
+        </Flex>
       </form>
+
+      <AddSymptomDrawer
+        opened={symptomDrawerOpened}
+        close={closeSymptomDrawer}
+      />
+
+      <AddPrecautionDrawer
+        opened={precautionDrawerOpened}
+        close={closePrecautionDrawer}
+      />
     </Drawer>
   );
 }
