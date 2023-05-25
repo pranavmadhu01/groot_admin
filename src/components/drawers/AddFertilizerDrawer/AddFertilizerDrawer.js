@@ -1,9 +1,17 @@
 import { useForm } from "@mantine/form";
-import { TextInput, Button, NumberInput, Drawer } from "@mantine/core";
+import {
+  TextInput,
+  Button,
+  NumberInput,
+  Drawer,
+  LoadingOverlay,
+} from "@mantine/core";
 import { addFertilizer } from "@/api";
 import { notifications } from "@mantine/notifications";
+import { useDisclosure } from "@mantine/hooks";
 
 export default function AddFertilizerDrawer({ opened, close }) {
+  const [visible, { toggle }] = useDisclosure(false);
   const form = useForm({
     initialValues: {
       name: "",
@@ -24,11 +32,12 @@ export default function AddFertilizerDrawer({ opened, close }) {
       title="ADD FERTILIZER"
       position="right"
     >
+      <LoadingOverlay visible={visible} overlayBlur={2} />
       <form
         maw={320}
         mx="auto"
         onSubmit={form.onSubmit(() => {
-          console.log(form.values);
+          toggle();
           addFertilizer(form.values).then((response) => {
             notifications.show({
               title: "success",

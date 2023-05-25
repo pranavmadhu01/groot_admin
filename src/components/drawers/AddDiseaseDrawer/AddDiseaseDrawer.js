@@ -5,11 +5,14 @@ import {
   NumberInput,
   Drawer,
   FileInput,
+  LoadingOverlay,
 } from "@mantine/core";
 import { addFertilizer } from "@/api";
 import { notifications } from "@mantine/notifications";
+import { useDisclosure } from "@mantine/hooks";
 
 export default function AddDiseaseDrawer({ opened, close }) {
+  const [visible, { toggle }] = useDisclosure(false);
   const form = useForm({
     initialValues: {
       name: "",
@@ -33,11 +36,13 @@ export default function AddDiseaseDrawer({ opened, close }) {
       title="ADD DISEASE"
       position="right"
     >
+      <LoadingOverlay visible={visible} overlayBlur={2} />
       <form
         maw={320}
         mx="auto"
         onSubmit={form.onSubmit(() => {
           console.log(form.values);
+          toggle();
           addFertilizer(form.values).then((response) => {
             notifications.show({
               title: "success",

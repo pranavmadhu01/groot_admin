@@ -15,12 +15,14 @@ export default function Fertilizer() {
   }, [opened]);
 
   return (
-    <SimpleGrid cols={3}>
-      {fertilizers.map(({ name, price, _id }) => (
-        <DisplayCard subtitle={price} title={name} key={_id} />
-      ))}
-      <AddFertilizerDrawer opened={opened} close={close} />
+    <SimpleGrid cols={3} mah="100%" style={{ overflow: "auto" }}>
       <AddCard onClick={open} name="Add Fertilizer" />
+      {fertilizers
+        .map(({ name, price, _id }) => (
+          <DisplayCard subtitle={price} title={name} key={_id} />
+        ))
+        .reverse()}
+      <AddFertilizerDrawer opened={opened} close={close} />
     </SimpleGrid>
   );
 }

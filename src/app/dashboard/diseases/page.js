@@ -15,7 +15,7 @@ export default function Diseases() {
   }, [opened]);
 
   return (
-    <SimpleGrid cols={3}>
+    <SimpleGrid cols={3} mah="100%" style={{ overflow: "auto" }}>
       {diseases.map(({ name, price, _id }) => (
         <DisplayCard subtitle={price} title={name} key={_id} />
       ))}
