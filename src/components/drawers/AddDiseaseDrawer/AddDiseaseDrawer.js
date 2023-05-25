@@ -10,6 +10,7 @@ import {
 import { addFertilizer } from "@/api";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
+import CustomButton from "@/components/elements/CustomButton";
 
 export default function AddDiseaseDrawer({ opened, close }) {
   const [visible, { toggle }] = useDisclosure(false);
@@ -83,39 +84,18 @@ export default function AddDiseaseDrawer({ opened, close }) {
           {...form.getInputProps("image")}
         />
 
-        <Button
-          variant="outline"
-          type="button"
-          style={{
-            marginTop: 30,
-            marginBottom: 50,
-            color: "white",
-            backgroundColor: "green",
-            border: "none",
-            borderRadius: 15,
-            paddingVertical: 10,
-            paddingHorizontal: 30,
-          }}
-        >
-          Add Symptoms
-        </Button>
+        <CustomButton
+          variant={"outline"}
+          color={'green'}
+          borderColor={'green'}
+          label={"Add Symptoms"}
+        />
 
-        <Button
-          variant="outline"
-          type="submit"
-          style={{
-            marginTop: 30,
-            marginBottom: 50,
-            color: "white",
-            backgroundColor: "green",
-            border: "none",
-            borderRadius: 30,
-            paddingVertical: 10,
-            paddingHorizontal: 30,
-          }}
-        >
-          Add Fertilizer
-        </Button>
+        <CustomButton
+          variant={"filled"}
+          label={"Add Fertilizer"}
+          backgroundColor={"green"}
+        />
       </form>
     </Drawer>
   );
