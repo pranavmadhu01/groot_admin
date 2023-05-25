@@ -21,13 +21,14 @@ export default function DashboardLayout({ children }) {
             width: "100% ",
             padding: "10px",
             borderRadius: "10px",
+            overflow: "auto",
           }}
           size="xl"
         >
           {children}
         </div>
       </Flex>
-      <Notifications />
+      <Notifications position="bottom-left"/>
     </Flex>
   );
 }
