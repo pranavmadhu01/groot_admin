@@ -1,6 +1,6 @@
 import { createStyles, rem } from "@mantine/core";
 
-const addFertilizerCardStyle = createStyles((theme) => ({
+const addCardStyle = createStyles((theme) => ({
   header: {
     width: "100%",
     cursor: "pointer",
@@ -19,4 +19,4 @@ const addFertilizerCardStyle = createStyles((theme) => ({
     gap: 15,
   },
 }));
-export { addFertilizerCardStyle };
+export { addCardStyle };

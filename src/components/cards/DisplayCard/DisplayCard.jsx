@@ -1,14 +1,10 @@
 import {
-  createStyles,
   Text,
   Card,
-  RingProgress,
-  Group,
-  rem,
 } from "@mantine/core";
 import { displayCardStyle } from "./displaycard.styles";
 
-export default function DisplayCard({ title, price }) {
+export default function DisplayCard({ title, subtitle }) {
   const { classes, theme } = displayCardStyle();
 
   return (
@@ -20,7 +16,7 @@ export default function DisplayCard({ title, price }) {
           </Text>
           <div>
             <Text className={classes.lead} mt={30}>
-              {price}
+              {subtitle}
             </Text>
             <Text fz="xs" color="dimmed">
               Price
