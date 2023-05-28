@@ -5,14 +5,16 @@ import {
   Drawer,
   FileInput,
   LoadingOverlay,
+  Select,
+  Button,
 } from "@mantine/core";
-import { addNewDiseases } from "@/api";
+import { addNewDiseases, getAllPlants } from "@/api";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import CustomButton from "@/components/elements/CustomButton";
 import AddSymptomDrawer from "./AddSymptomDrawer";
 import AddPrecautionDrawer from "./AddPrecautionDrawer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function AddDiseaseDrawer({ opened, close }) {
   const [visible, { toggle }] = useDisclosure(false);
@@ -45,10 +47,11 @@ export default function AddDiseaseDrawer({ opened, close }) {
     initialValues: {
       name: "",
       description: "",
+      plant_id: "",
       image: "",
+      type:"",
       symptoms: [],
       precautions: [],
-      type: "",
     },
     validate: {
       name: (value) =>
@@ -58,10 +61,25 @@ export default function AddDiseaseDrawer({ opened, close }) {
           ? "Description must have at least 10 characters"
           : null,
       image: (value) => (value === undefined ? "Must select an image" : null),
-      type: (value) =>
-        value.length < 50 ? "Type must have atleast 3 characters" : null,
     },
   });
+
+  const [plants, setPlants] = useState([]);
+  useEffect(() => {
+    getAllPlants()
+      .then((response) => {
+        console.log(response.data.data);
+        setPlants(response.data.data);
+      })
+      .catch((error) => {
+        notifications.show({
+          title: "Error",
+          message: error.response.data.message,
+        });
+      });
+  }, [opened]);
+
+  // console.log(form.values);
 
   return (
     <Drawer
@@ -75,9 +93,9 @@ export default function AddDiseaseDrawer({ opened, close }) {
         maw={320}
         mx="auto"
         onSubmit={form.onSubmit(() => {
-          console.log(form.values);
           toggle();
-          addNewDiseases(form.values).then((response) => {
+          console.log(form.values);
+          addNewDiseases(form.values, form.values.plant_id).then((response) => {
             notifications.show({
               title: "success",
               message: response.data.message,
@@ -100,6 +118,26 @@ export default function AddDiseaseDrawer({ opened, close }) {
           placeholder="Enter the disease description"
           mb={20}
           {...form.getInputProps("description")}
+        />
+
+        <Select
+          label="Plant Name"
+          placeholder="Select a plant"
+          data={plants.map((plant) => ({
+            value: plant._id,
+            label: plant.name,
+          }))}
+          {...form.getInputProps("plant_id")}
+        />
+
+        <Select
+          label="Type"
+          placeholder="Select a type"
+          data={[
+            { value: "pest", label: "Pest" },
+            { value: "disease", label: "Disease" },
+          ]}
+          {...form.getInputProps("type")}
         />
 
         <FileInput
@@ -130,26 +168,42 @@ export default function AddDiseaseDrawer({ opened, close }) {
             />
           </Flex>
 
-          <CustomButton
-            type={"submit"}
+          {/* <CustomButton
+            type="submit"
             label={"Add Disease"}
             variant={"filled"}
             backgroundColor={"green"}
             width={"100%"}
             height={60}
-          />
+          /> */}
+          <Button
+            variant="outline"
+            type="submit"
+            style={{
+              marginTop: 30,
+              marginBottom: 50,
+              color: "white",
+              backgroundColor: "green",
+              border: "none",
+              borderRadius: 30,
+              paddingVertical: 10,
+              paddingHorizontal: 30,
+            }}
+          >
+            Add Disease
+          </Button>
         </Flex>
+
+        <AddSymptomDrawer
+          opened={symptomDrawerOpened}
+          close={closeSymptomDrawer}
+        />
+
+        <AddPrecautionDrawer
+          opened={precautionDrawerOpened}
+          close={closePrecautionDrawer}
+        />
       </form>
-
-      <AddSymptomDrawer
-        opened={symptomDrawerOpened}
-        close={closeSymptomDrawer}
-      />
-
-      <AddPrecautionDrawer
-        opened={precautionDrawerOpened}
-        close={closePrecautionDrawer}
-      />
     </Drawer>
   );
 }

@@ -16,8 +16,8 @@ const addFertilizer = async (data) => {
 const getAllDiseases = async () => {
   return await axios.get(diseaseUrl);
 };
-const addNewDiseases = async (data) => {
-  return await axios.post(diseaseUrl, data, {
+const addNewDiseases = async (data, plant_id) => {
+  return await axios.post(`${diseaseUrl}/${plant_id}`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

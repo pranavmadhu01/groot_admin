@@ -11,7 +11,17 @@ export default function Diseases() {
   const [opened, { open, close, toggle }] = useDisclosure(false);
   const [diseases, setDiseases] = useState([]);
   useEffect(() => {
-    getAllDiseases().then((response) => setDiseases(response.data.data));
+    getAllDiseases()
+      .then((response) => {
+        console.log(response.data.data);
+        setDiseases(response.data.data);
+      })
+      .catch((error) => {
+        notifications.show({
+          title: "Error",
+          message: error.response.data.message,
+        });
+      });
   }, [opened]);
 
   return (
