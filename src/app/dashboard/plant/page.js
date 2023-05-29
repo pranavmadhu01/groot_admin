@@ -1,5 +1,5 @@
 "use client";
-import { getAllPlants } from "@/api";
+import { deletePlant, getAllPlants } from "@/api";
 import AddCard from "@/components/cards/AddCard/AddCard";
 import PhotoCard from "@/components/cards/PhotoCard/PhotoCard";
 import AddPlantDrawer from "@/components/drawers/AddPlantDrawer/AddPlantDrawer";
@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 export default function Plant() {
   const [opened, { open, close, toggle }] = useDisclosure(false);
   const [plants, setPlants] = useState([]);
+
   useEffect(() => {
     getAllPlants()
       .then((response) => {
@@ -24,6 +25,26 @@ export default function Plant() {
         });
       });
   }, [opened]);
+
+  const handleDelete = async (plantId) => {
+    try {
+      await deletePlant(plantId);
+      setPlants((prevPlants) =>
+        prevPlants.filter((plant) => plant._id !== plantId)
+      );
+
+      notifications.show({
+        title: "Success",
+        message: "Plant deleted successfully",
+      });
+    } catch (error) {
+      notifications.show({
+        title: "Error",
+        message: error.response.data.message,
+      });
+    }
+  };
+
   return (
     <SimpleGrid cols={3} mah="100%" style={{ overflow: "auto" }}>
       <AddCard name="Add Plant" onClick={open} />
@@ -35,6 +56,7 @@ export default function Plant() {
             name={name}
             seedrate={seedrate}
             key={_id}
+            handleDelete={() => handleDelete(_id)}
           />
         ))
         .reverse()}

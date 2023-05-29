@@ -1,12 +1,22 @@
+import { deletePlant } from "@/api";
 import { Card, Image, Text, Badge, Button, Group, Flex } from "@mantine/core";
+import { useState } from "react";
 
 export default function PhotoCard({
   image,
   name,
   seedrate,
   defaultph,
-  onCLick,
+  handleDelete,
+  handleEdit,
 }) {
+  const [showTimeline, setShowTimeline] = useState(false);
+
+  const handleViewTimeline = () => {
+    setShowTimeline(true);
+    onClick();
+  };
+
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section>
@@ -14,14 +24,14 @@ export default function PhotoCard({
       </Card.Section>
 
       <Group position="apart" mt="md" mb="xs">
-        <Text weight={500}>{name}</Text>
+        <Text pl={10} weight={500}>{name}</Text>
       </Group>
       <Group position="apart">
         <Badge color="pink" variant="light">
-          "Seed rate : " Rs {seedrate}
+          Seed rate : Rs. {seedrate}
         </Badge>
         <Badge color="green" variant="light">
-          "Default pH : "{defaultph}
+          Default pH : {defaultph}
         </Badge>
       </Group>
       <Flex gap={5}>
@@ -31,7 +41,7 @@ export default function PhotoCard({
           fullWidth
           mt="md"
           radius="md"
-          onClick={onCLick}
+          onClick={handleViewTimeline}
         >
           View Timeline
         </Button>
@@ -41,7 +51,7 @@ export default function PhotoCard({
           fullWidth
           mt="md"
           radius="md"
-          onClick={onCLick}
+          onClick={handleEdit}
         >
           Edit
         </Button>
@@ -51,7 +61,7 @@ export default function PhotoCard({
           fullWidth
           mt="md"
           radius="md"
-          onClick={onCLick}
+          onClick={handleDelete}
         >
           Delete
         </Button>

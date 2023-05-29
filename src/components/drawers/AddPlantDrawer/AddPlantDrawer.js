@@ -7,7 +7,7 @@ import {
   FileInput,
   LoadingOverlay,
 } from "@mantine/core";
-import { addANewPlant, addFertilizer } from "@/api";
+import { addANewPlant } from "@/api";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 export default function AddPlantDrawer({ opened, close }) {
