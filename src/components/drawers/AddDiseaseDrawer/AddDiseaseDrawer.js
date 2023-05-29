@@ -79,8 +79,6 @@ export default function AddDiseaseDrawer({ opened, close }) {
       });
   }, [opened]);
 
-  // console.log(form.values);
-
   return (
     <Drawer
       opened={opened}
@@ -152,6 +150,7 @@ export default function AddDiseaseDrawer({ opened, close }) {
           <Flex justify={"center"} gap={10} my={10}>
             <CustomButton
               label={"Add Symptoms"}
+              type={'button'}
               variant={"outline"}
               color={"green"}
               borderColor={"green"}
@@ -160,6 +159,7 @@ export default function AddDiseaseDrawer({ opened, close }) {
             />
             <CustomButton
               label={"Add Precautions"}
+              type={'button'}
               variant={"outline"}
               color={"green"}
               borderColor={"green"}
@@ -168,15 +168,14 @@ export default function AddDiseaseDrawer({ opened, close }) {
             />
           </Flex>
 
-          {/* <CustomButton
-            type="submit"
+          <CustomButton
             label={"Add Disease"}
             variant={"filled"}
             backgroundColor={"green"}
             width={"100%"}
             height={60}
-          /> */}
-          <Button
+          />
+          {/* <Button
             variant="outline"
             type="submit"
             style={{
@@ -191,7 +190,7 @@ export default function AddDiseaseDrawer({ opened, close }) {
             }}
           >
             Add Disease
-          </Button>
+          </Button> */}
         </Flex>
 
         <AddSymptomDrawer

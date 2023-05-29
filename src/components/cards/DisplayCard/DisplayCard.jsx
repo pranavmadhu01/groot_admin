@@ -18,9 +18,9 @@ export default function DisplayCard({ title, subtitle, isPrice }) {
             <Text className={classes.lead} mt={30}>
               {subtitle}
             </Text>
-            <Text fz="xs" color="dimmed">
+            {isPrice ? (<Text fz="xs" color="dimmed">
               Price
-            </Text>
+            </Text>) : null}
           </div>
         </div>
       </div>

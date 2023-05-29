@@ -9,8 +9,10 @@ export default function AddPrecautionDrawer({ opened, close }) {
   const [precautions, setPrecautions] = useState([]);
 
   const handlePrecautionAdd = () => {
-    setPrecautions([...precautions, value]);
-    setValue("");
+    if (value) {
+      setPrecautions([...precautions, value]);
+      setValue("");
+    }
   };
 
   const handleFinish = () => {
@@ -36,6 +38,7 @@ export default function AddPrecautionDrawer({ opened, close }) {
       <Flex gap={10}>
         <CustomButton
           label={"Add Next Precaution"}
+          type={"button"}
           variant={"outline"}
           color={"green"}
           borderColor={"green"}
@@ -45,6 +48,7 @@ export default function AddPrecautionDrawer({ opened, close }) {
         />
         <CustomButton
           label={"Finish"}
+          type={"button"}
           variant={"filled"}
           backgroundColor={"green"}
           width={"100%"}

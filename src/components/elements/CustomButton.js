@@ -17,7 +17,7 @@ export default function CustomButton({
   return (
     <Button
       variant={variant || 'outline'}
-      type={type || "button"}
+      type={type || "submit"}
       onClick={onClick}
       
       style={{

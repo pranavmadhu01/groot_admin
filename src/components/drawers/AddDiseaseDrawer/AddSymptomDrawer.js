@@ -9,8 +9,10 @@ export default function AddSymptomDrawer({ opened, close }) {
   const [symptoms, setSymptoms] = useState([]);
 
   const handleSymptomAdd = () => {
-    setSymptoms([...symptoms, value]); 
-    setValue("");
+    if (value) {
+      setSymptoms([...symptoms, value]);
+      setValue("");
+    }
   };
 
   const handleFinish = () => {
