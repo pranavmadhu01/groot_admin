@@ -169,6 +169,7 @@ export default function AddDiseaseDrawer({ opened, close }) {
           </Flex>
 
           <CustomButton
+            type="submit"
             label={"Add Disease"}
             variant={"filled"}
             backgroundColor={"green"}
