@@ -47,5 +47,17 @@ const updatePlant = async (plant_id, data) => {
   console.log("Update", data);
   return await axios.put(`${plantUrl}/update/${plant_id}`, data);
 };
+const addPlantTimeline = async (plant_id, data) => {
+  return await axios.post(`${plantUrl}/addtimeline/${plant_id}`, {
+    timeline: data,
+  });
+};
 
-export { addANewPlant, getAllPlants, getPlant, deletePlant, updatePlant };
+export {
+  addANewPlant,
+  getAllPlants,
+  getPlant,
+  deletePlant,
+  updatePlant,
+  addPlantTimeline,
+};
