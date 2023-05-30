@@ -7,11 +7,12 @@ import {
   FileInput,
   LoadingOverlay,
 } from "@mantine/core";
-import { addANewPlant } from "@/api";
+import { addANewPlant, getPlant, updatePlant } from "@/api";
 import { notifications } from "@mantine/notifications";
-import { useDisclosure } from "@mantine/hooks";
-export default function AddPlantDrawer({ opened, close }) {
-  const [visible, { toggle }] = useDisclosure(false);
+import { useEffect, useState } from "react";
+
+export default function AddPlantDrawer({ opened, close, edit, editPlantId }) {
+  const [loading, setLoading] = useState(false);
   const form = useForm({
     initialValues: {
       name: "",
@@ -30,18 +31,64 @@ export default function AddPlantDrawer({ opened, close }) {
           : null,
     },
   });
+
+  useEffect(() => {
+    if (edit && editPlantId) {
+      fetchPlantData();
+    } else {
+      form.reset();
+    }
+  }, [edit, editPlantId]);
+
+  const fetchPlantData = async () => {
+    try {
+      const plant = await getPlant(editPlantId);
+      form.setValues(plant.data.data);
+    } catch (error) {
+      notifications.show({
+        title: "Error",
+        message: "Failed to fetch plant data!",
+      });
+    }
+  };
+
   return (
-    <Drawer opened={opened} onClose={close} title="ADD PLANT" position="right">
-      <LoadingOverlay visible={visible} overlayBlur={2} />
+    <Drawer
+      opened={opened}
+      onClose={close}
+      title={edit ? "EDIT PLANT" : "ADD PLANT"}
+      position="right"
+    >
+      <LoadingOverlay visible={loading} overlayBlur={2} />
       <form
         maw={320}
         mx="auto"
-        onSubmit={form.onSubmit(() => {
-          toggle();
-          addANewPlant(form.values).then((response) => {
-            notifications.show(response.data.message);
-            close();
-          });
+        onSubmit={form.onSubmit(async () => {
+          setLoading(true);
+          try {
+            if (edit) {
+              await updatePlant(editPlantId, form.values);
+              close();
+              notifications.show({
+                title: "Success",
+                message: "Plant updated successfully.",
+              });
+            } else {
+              await addANewPlant(form.values);
+              close();
+              notifications.show({
+                title: "Success",
+                message: "Plant added successfully.",
+              });
+            }
+          } catch (error) {
+            notifications.show({
+              title: "Error",
+              message: "An error occured!",
+            });
+          } finally {
+            setLoading(false);
+          }
         })}
       >
         <TextInput
@@ -84,7 +131,7 @@ export default function AddPlantDrawer({ opened, close }) {
             paddingHorizontal: 30,
           }}
         >
-          Add Plant
+          {edit ? "Update Plant" : "Add Plant"}
         </Button>
       </form>
     </Drawer>

@@ -37,8 +37,15 @@ const addANewPlant = async (data) => {
 const getAllPlants = async () => {
   return await axios.get(plantUrl);
 };
+const getPlant = async (plant_id) => {
+  return await axios.get(`${plantUrl}/${plant_id}`);
+};
 const deletePlant = async (plant_id) => {
   return await axios.delete(`${plantUrl}/delete/${plant_id}`);
 };
+const updatePlant = async (plant_id, data) => {
+  console.log("Update", data);
+  return await axios.put(`${plantUrl}/update/${plant_id}`, data);
+};
 
-export { addANewPlant, getAllPlants, deletePlant};
+export { addANewPlant, getAllPlants, getPlant, deletePlant, updatePlant };

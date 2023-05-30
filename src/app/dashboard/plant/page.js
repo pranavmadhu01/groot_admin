@@ -11,20 +11,28 @@ import { useEffect, useState } from "react";
 export default function Plant() {
   const [opened, { open, close, toggle }] = useDisclosure(false);
   const [plants, setPlants] = useState([]);
+  const [editPlantId, setEditPlantId] = useState(null);
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     getAllPlants()
       .then((response) => {
-        console.log(response.data.data);
         setPlants(response.data.data);
       })
       .catch((error) => {
         notifications.show({
           title: "Error",
-          message: error.response.data.message,
+          message: "An error occurred!",
         });
       });
   }, [opened]);
+
+  const handleAdd = async () => {
+    setEdit(false);
+    setEditPlantId(null);
+
+    open();
+  };
 
   const handleDelete = async (plantId) => {
     try {
@@ -40,14 +48,21 @@ export default function Plant() {
     } catch (error) {
       notifications.show({
         title: "Error",
-        message: error.response.data.message,
+        message: "An error occurred!",
       });
     }
   };
 
+  const handleEdit = async (plantId) => {
+    setEdit(true);
+    setEditPlantId(plantId);
+
+    open();
+  };
+
   return (
     <SimpleGrid cols={3} mah="100%" style={{ overflow: "auto" }}>
-      <AddCard name="Add Plant" onClick={open} />
+      <AddCard name="Add Plant" onClick={handleAdd} />
       {plants
         .map(({ name, defaultph, image, seedrate, _id }) => (
           <PhotoCard
@@ -57,10 +72,16 @@ export default function Plant() {
             seedrate={seedrate}
             key={_id}
             handleDelete={() => handleDelete(_id)}
+            handleEdit={() => handleEdit(_id)}
           />
         ))
         .reverse()}
-      <AddPlantDrawer opened={opened} close={close} />
+      <AddPlantDrawer
+        opened={opened}
+        close={close}
+        editPlantId={editPlantId}
+        edit={edit}
+      />
     </SimpleGrid>
   );
 }
