@@ -34,6 +34,7 @@ export default function Plant() {
             image={image}
             name={name}
             seedrate={seedrate}
+            id={_id}
             key={_id}
           />
         ))

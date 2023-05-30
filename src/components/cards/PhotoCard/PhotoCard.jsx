@@ -1,4 +1,6 @@
+import TimelineModal from "@/components/modals/TimelineModal.js/TImelineModal";
 import { Card, Image, Text, Badge, Button, Group, Flex } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 
 export default function PhotoCard({
   image,
@@ -6,9 +8,17 @@ export default function PhotoCard({
   seedrate,
   defaultph,
   onCLick,
+  id,
 }) {
+  const [opened, { open, close }] = useDisclosure(false);
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
+      <TimelineModal
+        opened={opened}
+        onClose={close}
+        title={"Add Plant Timeline"}
+        plantid={id}
+      />
       <Card.Section>
         <Image src={image} height={160} alt={name + " " + "image"} />
       </Card.Section>
@@ -31,7 +41,7 @@ export default function PhotoCard({
           fullWidth
           mt="md"
           radius="md"
-          onClick={onCLick}
+          onClick={open}
         >
           View Timeline
         </Button>
