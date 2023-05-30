@@ -7,7 +7,8 @@ export default function PhotoCard({
   name,
   seedrate,
   defaultph,
-  onCLick,
+  handleDelete,
+  handleEdit,
   id,
 }) {
   const [opened, { open, close }] = useDisclosure(false);
@@ -24,14 +25,14 @@ export default function PhotoCard({
       </Card.Section>
 
       <Group position="apart" mt="md" mb="xs">
-        <Text weight={500}>{name}</Text>
+        <Text pl={10} weight={500}>{name}</Text>
       </Group>
       <Group position="apart">
         <Badge color="pink" variant="light">
-          "Seed rate : " Rs {seedrate}
+          Seed rate : Rs. {seedrate}
         </Badge>
         <Badge color="green" variant="light">
-          "Default pH : "{defaultph}
+          Default pH : {defaultph}
         </Badge>
       </Group>
       <Flex gap={5}>
@@ -51,7 +52,7 @@ export default function PhotoCard({
           fullWidth
           mt="md"
           radius="md"
-          onClick={onCLick}
+          onClick={handleEdit}
         >
           Edit
         </Button>
@@ -61,7 +62,7 @@ export default function PhotoCard({
           fullWidth
           mt="md"
           radius="md"
-          onClick={onCLick}
+          onClick={handleDelete}
         >
           Delete
         </Button>

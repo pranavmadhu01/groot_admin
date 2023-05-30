@@ -4,7 +4,7 @@ import {
 } from "@mantine/core";
 import { displayCardStyle } from "./displaycard.styles";
 
-export default function DisplayCard({ title, subtitle }) {
+export default function DisplayCard({ title, subtitle, isPrice }) {
   const { classes, theme } = displayCardStyle();
 
   return (
@@ -18,9 +18,9 @@ export default function DisplayCard({ title, subtitle }) {
             <Text className={classes.lead} mt={30}>
               {subtitle}
             </Text>
-            <Text fz="xs" color="dimmed">
+            {isPrice ? (<Text fz="xs" color="dimmed">
               Price
-            </Text>
+            </Text>) : null}
           </div>
         </div>
       </div>
