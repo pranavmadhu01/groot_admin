@@ -1,6 +1,8 @@
 import { getAllFertilzers } from "@/api";
 import {
+  Badge,
   Button,
+  Card,
   Divider,
   Flex,
   Image,
@@ -12,13 +14,41 @@ import {
   TextInput,
   Timeline,
 } from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { Fondamento } from "next/font/google";
 import { useEffect, useState } from "react";
 
 export default function TimelineModal({ opened, onClose, title, plantid }) {
   const [timeline, setTimeline] = useState([]);
   const [fertilizer, setFertilizer] = useState([]);
-  const [selectedfertilizer, setSelectedFertilizer] = useState([{}]);
-  console.log(plantid);
+  const [selectedfertilizer, setSelectedFertilizer] = useState({
+    fertilizer_id: "",
+    per_cent: 0,
+  });
+  const form = useForm({
+    initialValues: {
+      title: "",
+      start_date_num: 0,
+      end_date_num: 0,
+      description: "",
+      fertilizer: [],
+    },
+    validate: {},
+  });
+  const fertilizerDataHelper = () => {
+    console.log(selectedfertilizer);
+    form.setFieldValue("fertilizer", [
+      ...form.values.fertilizer,
+      selectedfertilizer,
+    ]);
+    setSelectedFertilizer({
+      fertilizer_id: "",
+      per_cent: 0,
+    });
+  };
+  const timelineAdderHelper = () => {
+    console.log("iam time line adder helper");
+  };
   useEffect(() => {
     getAllFertilzers().then((response) => {
       setFertilizer(response.data.data);
@@ -34,53 +64,130 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
     >
       <Flex direction="column">
         {timeline.length > 0 && (
-          <Timeline active={1} bulletSize={24} lineWidth={2}>
+          <Timeline active={timeline.length} bulletSize={24} lineWidth={2}>
             {timeline.map((timeline) => (
               <Timeline.Item
                 bullet={<Image src="/assets/images/leaves.png" width={15} />}
-                title="New branch"
+                title={timeline.title}
                 color="green"
               >
                 <Text color="dimmed" size="sm">
-                  You&apos;ve created new branch{" "}
                   <Text variant="link" component="span" inherit>
-                    fix-notifications
-                  </Text>{" "}
-                  from master
+                    {timeline.description}
+                  </Text>
                 </Text>
                 <Text size="xs" mt={4}>
-                  2 hours ago
+                  <Badge></Badge>
                 </Text>
               </Timeline.Item>
             ))}
           </Timeline>
         )}
-        <Flex direction="column" style={{ flex: 1 }}>
-          <TextInput label="Title" placeholder="Enter the title" />
-          <Textarea label="Description" placeholder="Enter the description" />
+        <form
+          style={{
+            flex: 1,
+            gap: 5,
+            display: "flex",
+            flexDirection: "column",
+            position: "sticky",
+            bottom: 20,
+            background: "#fff",
+          }}
+          onSubmit={form.onSubmit((values) => console.log(values))}
+        >
+          <TextInput
+            label="Title"
+            placeholder="Enter the title"
+            {...form.getInputProps("title")}
+          />
+          <Textarea
+            label="Description"
+            placeholder="Enter the description"
+            {...form.getInputProps("description")}
+          />
           <Flex style={{ flex: 1 }} gap={10}>
-            <NumberInput label="Start number" />
-            <NumberInput label="End number" />
+            <NumberInput
+              label="Start number"
+              style={{ flex: 1 }}
+              {...form.getInputProps("start_date_num")}
+            />
+            <NumberInput
+              label="End number"
+              style={{ flex: 1 }}
+              {...form.getInputProps("end_date_num")}
+            />
           </Flex>
+          {form.values.fertilizer.length > 0 && <Divider />}
+          <Flex
+            direction={"row"}
+            gap={10}
+            wrap={"wrap"}
+            p={10}
+            justify={"space-around"}
+          >
+            {form.values.fertilizer.map(({ fertilizer_id, per_cent }) => (
+              <SmallFertilizerCard
+                name={
+                  fertilizer.filter(
+                    (fertilizer) => fertilizer._id === fertilizer_id
+                  )[0].name
+                }
+                per_cent={per_cent}
+              />
+            ))}
+          </Flex>
+          {form.values.fertilizer.length > 0 && <Divider />}
           <Flex align={"flex-end"} justify="center" gap={20}>
             <Select
               label="Select your fertilizer"
-              itemComponent={({ _id, price, name }) => (
-                <Flex direction="column">
-                  <Text>{_id}</Text>
-                  <Text>{name}</Text>
-                  <Text>{price}</Text>
-                  <Divider />
-                </Flex>
-              )}
-              // onChange={(e) => console.log(e.target.value)}
-              data={fertilizer}
+              data={fertilizer.map(({ _id, name }) => ({
+                label: name,
+                value: _id,
+              }))}
+              value={selectedfertilizer.fertilizer_id}
+              onChange={(value) =>
+                setSelectedFertilizer({
+                  ...selectedfertilizer,
+                  fertilizer_id: value,
+                })
+              }
             />
-            <NumberInput label="Enter the quantity in kg" />
-            <Button>Add more fertilizer</Button>
+            <NumberInput
+              label="Enter per cent quantity (in kg)"
+              value={selectedfertilizer.per_cent}
+              precision={4}
+              onChange={(value) =>
+                setSelectedFertilizer({
+                  ...selectedfertilizer,
+                  per_cent: value,
+                })
+              }
+            />
+            <Button onClick={fertilizerDataHelper}>Add more fertilizer</Button>
           </Flex>
-        </Flex>
+          <Button
+            onClick={() => {
+              setTimeline([...timeline, form.values]);
+              form.reset();
+            }}
+          >
+            Add Next Event
+          </Button>
+          <Button onClick={timelineAdderHelper}>Save timeline</Button>
+        </form>
       </Flex>
     </Modal>
   );
 }
+const SmallFertilizerCard = ({ name, per_cent }) => {
+  return (
+    <Card padding="xs" withBorder w={200} maw={200}>
+      <Text weight={500} size="sm" mt="xs">
+        Name : {name}
+      </Text>
+      <Text mt="xs" color="dimmed" size="xs">
+        per-cent value <Badge color={"green"}>{per_cent}</Badge> kg
+      </Text>
+    </Card>
+  );
+};
