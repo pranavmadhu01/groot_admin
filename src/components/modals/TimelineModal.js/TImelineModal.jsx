@@ -21,10 +21,12 @@ import { useEffect, useState } from "react";
 export default function TimelineModal({ opened, onClose, title, plantid }) {
   const [timeline, setTimeline] = useState([]);
   const [fertilizer, setFertilizer] = useState([]);
+
   const [selectedfertilizer, setSelectedFertilizer] = useState({
     fertilizer_id: "",
     per_cent: 0,
   });
+
   const form = useForm({
     initialValues: {
       title: "",
@@ -35,6 +37,7 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
     },
     validate: {},
   });
+  
   const fertilizerDataHelper = () => {
     console.log(selectedfertilizer);
     form.setFieldValue("fertilizer", [
