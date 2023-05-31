@@ -1,4 +1,4 @@
-import { getAllFertilzers } from "@/api";
+import { addPlantTimeline, getAllFertilzers } from "@/api";
 import {
   Badge,
   Button,
@@ -15,7 +15,7 @@ import {
   Timeline,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { Fondamento } from "next/font/google";
+import { notifications } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 
 export default function TimelineModal({ opened, onClose, title, plantid }) {
@@ -39,7 +39,6 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
   });
   
   const fertilizerDataHelper = () => {
-    console.log(selectedfertilizer);
     form.setFieldValue("fertilizer", [
       ...form.values.fertilizer,
       selectedfertilizer,
@@ -50,7 +49,21 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
     });
   };
   const timelineAdderHelper = () => {
-    console.log("iam time line adder helper");
+    addPlantTimeline(plantid, timeline)
+      .then((response) => {
+        notifications.show({
+          title: "SUCCESS",
+          message: response.data.message,
+        });
+        setTimeline([]);
+        onClose();
+      })
+      .catch((error) => {
+        notifications.show({
+          title: "ERROR",
+          message: error.response.data.message,
+        });
+      });
   };
   useEffect(() => {
     getAllFertilzers().then((response) => {
@@ -79,9 +92,11 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
                     {timeline.description}
                   </Text>
                 </Text>
-                <Text size="xs" mt={4}>
+                {/* //TODO : elaborate for understandability */}
+                
+                {/* <Text size="xs" mt={4}>
                   <Badge></Badge>
-                </Text>
+                </Text> */}
               </Timeline.Item>
             ))}
           </Timeline>
@@ -96,7 +111,6 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
             bottom: 20,
             background: "#fff",
           }}
-          onSubmit={form.onSubmit((values) => console.log(values))}
         >
           <TextInput
             label="Title"
