@@ -13,7 +13,7 @@ export default function Fertilizer() {
   const [fertilizers, setFertilizers] = useState([]);
   useEffect(() => {
     getAllFertilzers()
-      .then((response) => setFertilizers(response.data.data))
+      .then((response) => setFertilizers(response.data.data.allfertilizers))
       .catch((error) =>
         notifications.show({
           title: "Error",

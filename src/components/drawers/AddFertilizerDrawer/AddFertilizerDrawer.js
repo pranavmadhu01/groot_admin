@@ -5,6 +5,7 @@ import {
   NumberInput,
   Drawer,
   LoadingOverlay,
+  Select,
 } from "@mantine/core";
 import { addFertilizer } from "@/api";
 import { notifications } from "@mantine/notifications";
@@ -16,12 +17,15 @@ export default function AddFertilizerDrawer({ opened, close }) {
     initialValues: {
       name: "",
       price: 0,
+      category: "",
     },
     validate: {
       name: (value) =>
         value.length < 2 ? "Name must have at least 3 letters" : null,
       price: (value) =>
         value <= 0 ? "Cannot have negative or 0 as the value" : null,
+      category: (value) =>
+        value.length === 0 ? "please select a category" : null,
     },
   });
 
@@ -61,6 +65,16 @@ export default function AddFertilizerDrawer({ opened, close }) {
           label="Price per kg"
           placeholder="Enter the price"
           {...form.getInputProps("price")}
+        />
+        <Select
+          label="Type"
+          placeholder="Select a type"
+          data={[
+            { value: "fertilizer", label: "Fertilizer" },
+            { value: "lime", label: "Lime" },
+            { value: "manure", label: "Manure" },
+          ]}
+          {...form.getInputProps("category")}
         />
         <Button
           variant="outline"
