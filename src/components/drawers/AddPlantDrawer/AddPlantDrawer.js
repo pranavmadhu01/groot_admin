@@ -99,6 +99,7 @@ export default function AddPlantDrawer({ opened, close, edit, editPlantId }) {
         />
         <NumberInput
           withAsterisk
+          precision={4}
           mt="md"
           label="Seed rate per gram"
           placeholder="Enter the seed rate per gram"

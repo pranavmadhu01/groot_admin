@@ -56,6 +56,7 @@ export default function AddFertilizerDrawer({ opened, close }) {
         />
         <NumberInput
           withAsterisk
+          precision={4}
           mt="md"
           label="Price per kg"
           placeholder="Enter the price"
