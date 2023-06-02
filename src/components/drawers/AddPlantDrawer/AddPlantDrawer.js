@@ -16,14 +16,17 @@ export default function AddPlantDrawer({ opened, close, edit, editPlantId }) {
   const form = useForm({
     initialValues: {
       name: "",
-      seedrate: 0,
+      seedpercentingram: 0,
+      seedcost: 0,
       defaultph: 0,
       image: "",
     },
     validate: {
       name: (value) =>
         value.length < 2 ? "Name must have at least 3 letters" : null,
-      seedrate: (value) =>
+      seedcost: (value) =>
+        value <= 0 ? "Cannot have negative or 0 as the value" : null,
+      seedpercentingram: (value) =>
         value <= 0 ? "Cannot have negative or 0 as the value" : null,
       defaultph: (value) =>
         value <= 0 || value > 14
@@ -101,12 +104,21 @@ export default function AddPlantDrawer({ opened, close, edit, editPlantId }) {
           withAsterisk
           precision={4}
           mt="md"
-          label="Seed rate per gram"
-          placeholder="Enter the seed rate per gram"
-          {...form.getInputProps("seedrate")}
+          label="Seed per cent in gram"
+          placeholder="Enter the seed per cent in gram"
+          {...form.getInputProps("seedpercentingram")}
         />
         <NumberInput
           withAsterisk
+          precision={4}
+          mt="md"
+          label="Seed cost per gram"
+          placeholder="Enter the seed cost per gram"
+          {...form.getInputProps("seedcost")}
+        />
+        <NumberInput
+          withAsterisk
+          precision={4}
           mt="md"
           label="Default pH value"
           placeholder="Enter the default pH value"

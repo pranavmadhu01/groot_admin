@@ -69,13 +69,14 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
   };
   useEffect(() => {
     getAllFertilzers().then((response) => {
-      setFertilizer(response.data.data);
+      setFertilizer(response.data.data.allfertilizers);
     });
   }, []);
   useEffect(() => {
     getPlantTimeline(plantid)
       .then((response) => {
-        setTimeline(response.data.data);
+        console.log(response.data);
+        setTimeline(response.data.data.planttimeline);
       })
       .catch((error) => {
         setError(error.response.data.message);
