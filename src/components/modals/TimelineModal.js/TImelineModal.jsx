@@ -93,11 +93,12 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
       <Flex direction="column">
         {timeline.length > 0 && (
           <Timeline active={timeline.length} bulletSize={24} lineWidth={2}>
-            {timeline.map((timeline) => (
+            {timeline.map((timeline, index) => (
               <Timeline.Item
                 bullet={<Image src="/assets/images/leaves.png" width={15} />}
                 title={timeline.title}
                 color="green"
+                key={index}
               >
                 <Text color="dimmed" size="sm">
                   <Text variant="link" component="span" inherit>
