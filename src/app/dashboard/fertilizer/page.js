@@ -6,12 +6,20 @@ import { useEffect, useState } from "react";
 import { getAllFertilzers } from "@/api";
 import DisplayCard from "@/components/cards/DisplayCard/DisplayCard";
 import AddFertilizerDrawer from "@/components/drawers/AddFertilizerDrawer/AddFertilizerDrawer";
+import { notifications } from "@mantine/notifications";
 
 export default function Fertilizer() {
   const [opened, { open, close, toggle }] = useDisclosure(false);
   const [fertilizers, setFertilizers] = useState([]);
   useEffect(() => {
-    getAllFertilzers().then((response) => setFertilizers(response.data.data));
+    getAllFertilzers()
+      .then((response) => setFertilizers(response.data.data))
+      .catch((error) =>
+        notifications.show({
+          title: "Error",
+          message: error.response.data.message,
+        })
+      );
   }, [opened]);
 
   return (
