@@ -14,18 +14,22 @@ export default function PhotoCard({
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
-      <TimelineModal
-        opened={opened}
-        onClose={close}
-        title={"Add Plant Timeline"}
-        plantid={id}
-      />
+      {opened && (
+        <TimelineModal
+          opened={opened}
+          onClose={close}
+          title={"Add Plant Timeline"}
+          plantid={id}
+        />
+      )}
       <Card.Section>
         <Image src={image} height={160} alt={name + " " + "image"} />
       </Card.Section>
 
       <Group position="apart" mt="md" mb="xs">
-        <Text pl={10} weight={500}>{name}</Text>
+        <Text pl={10} weight={500}>
+          {name}
+        </Text>
       </Group>
       <Group position="apart">
         <Badge color="pink" variant="light">

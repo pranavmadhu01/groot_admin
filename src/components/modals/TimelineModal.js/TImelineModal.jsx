@@ -1,4 +1,4 @@
-import { addPlantTimeline, getAllFertilzers } from "@/api";
+import { addPlantTimeline, getAllFertilzers, getPlantTimeline } from "@/api";
 import {
   Badge,
   Button,
@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 export default function TimelineModal({ opened, onClose, title, plantid }) {
   const [timeline, setTimeline] = useState([]);
   const [fertilizer, setFertilizer] = useState([]);
+  const [error, setError] = useState("");
   const [selectedfertilizer, setSelectedFertilizer] = useState({
     fertilizer_id: "",
     per_cent: 0,
@@ -63,9 +64,15 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
       });
   };
   useEffect(() => {
-    getAllFertilzers().then((response) => {
-      setFertilizer(response.data.data);
-    });
+    Promise.all([getAllFertilzers(), getPlantTimeline(plantid)])
+      .then((response) => {
+        setFertilizer(response[0].data.data);
+        setTimeline(response[1].data.data);
+      })
+      .catch((error) => {
+        setError(error.response.data.message);
+        console.log(error.response.data.message);
+      });
   }, []);
   return (
     <Modal
@@ -90,7 +97,7 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
                   </Text>
                 </Text>
                 {/* //TODO : elaborate for understandability */}
-                
+
                 {/* <Text size="xs" mt={4}>
                   <Badge></Badge>
                 </Text> */}
@@ -98,6 +105,8 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
             ))}
           </Timeline>
         )}
+        {error.length > 0 && <Badge color={"red"}>{error}</Badge>}
+
         <form
           style={{
             flex: 1,

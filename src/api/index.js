@@ -52,6 +52,9 @@ const addPlantTimeline = async (plant_id, data) => {
     timeline: data,
   });
 };
+const getPlantTimeline = async (plant_id) => {
+  return await axios.get(`${plantUrl}/timeline/${plant_id}`);
+};
 
 export {
   addANewPlant,
@@ -60,4 +63,5 @@ export {
   deletePlant,
   updatePlant,
   addPlantTimeline,
+  getPlantTimeline,
 };
