@@ -26,6 +26,7 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
     fertilizer_id: "",
     per_cent: 0,
   });
+
   const form = useForm({
     initialValues: {
       title: "",
@@ -36,6 +37,7 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
     },
     validate: {},
   });
+  
   const fertilizerDataHelper = () => {
     form.setFieldValue("fertilizer", [
       ...form.values.fertilizer,
