@@ -70,6 +70,7 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
       .then((response) => {
         setFertilizer(response[0].data.data);
         setTimeline(response[1].data.data);
+        console.log(response[1].data)
       })
       .catch((error) => {
         setError(error.response.data.message);

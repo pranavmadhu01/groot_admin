@@ -1,18 +1,21 @@
 "use client";
-import { deletePlant, getAllPlants } from "@/api";
+import { deletePlant, getAllFertilzers, getAllPlants } from "@/api";
 import AddCard from "@/components/cards/AddCard/AddCard";
 import PhotoCard from "@/components/cards/PhotoCard/PhotoCard";
 import AddPlantDrawer from "@/components/drawers/AddPlantDrawer/AddPlantDrawer";
 import { SimpleGrid } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Plant() {
   const [opened, { open, close, toggle }] = useDisclosure(false);
+  const [fertilizers, setFertilizers] = useState([]);
   const [plants, setPlants] = useState([]);
   const [editPlantId, setEditPlantId] = useState(null);
   const [edit, setEdit] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     getAllPlants()
@@ -26,6 +29,21 @@ export default function Plant() {
         });
       });
   }, [opened]);
+  useEffect(() => {
+    getAllFertilzers()
+      .then((response) => {
+        setFertilizers(response.data.data);
+      })
+      .catch((error) => {
+        notifications.show({
+          title: "Error",
+          message:
+            error.response.data.message +
+            ". Add a fertilizer to add a plant and continue, since timeline require fertilizer",
+        });
+        router.push("/dashboard/fertilizer");
+      });
+  });
 
   const handleAdd = async () => {
     setEdit(false);
