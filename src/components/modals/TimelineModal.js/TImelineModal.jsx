@@ -22,6 +22,7 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
   const [timeline, setTimeline] = useState([]);
   const [fertilizer, setFertilizer] = useState([]);
   const [error, setError] = useState("");
+  const [reload, setReload] = useState(false);
   const [selectedfertilizer, setSelectedFertilizer] = useState({
     fertilizer_id: "",
     per_cent: 0,
@@ -37,7 +38,7 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
     },
     validate: {},
   });
-  
+
   const fertilizerDataHelper = () => {
     form.setFieldValue("fertilizer", [
       ...form.values.fertilizer,
@@ -56,6 +57,7 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
           message: response.data.message,
         });
         setTimeline([]);
+        setReload(!reload);
         onClose();
       })
       .catch((error) => {
@@ -66,17 +68,20 @@ export default function TimelineModal({ opened, onClose, title, plantid }) {
       });
   };
   useEffect(() => {
-    Promise.all([getAllFertilzers(), getPlantTimeline(plantid)])
+    getAllFertilzers().then((response) => {
+      setFertilizer(response.data.data);
+    });
+  }, []);
+  useEffect(() => {
+    getPlantTimeline(plantid)
       .then((response) => {
-        setFertilizer(response[0].data.data);
-        setTimeline(response[1].data.data);
-        console.log(response[1].data)
+        setTimeline(response.data.data);
       })
       .catch((error) => {
         setError(error.response.data.message);
         console.log(error.response.data.message);
       });
-  }, []);
+  }, [reload]);
   return (
     <Modal
       opened={opened}
