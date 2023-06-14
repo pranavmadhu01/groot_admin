@@ -38,6 +38,8 @@
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
+
+  font-family: 'Gilroy', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -114,3 +116,52 @@ a {
   { maxWidth: '48rem', cols: 2, spacing: 'sm' },
   { maxWidth: '36rem', cols: 1, spacing: 'sm' },
 ]} */
+
+@font-face {
+  font-family: 'Gilroy-Thin';
+  src: url('../../public/fonts/Gilroy-Thin.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy-Light';
+  src: url('../../public/fonts/Gilroy-Light.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy-Regular';
+  src: url('../../public/fonts/Gilroy-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy-Medium';
+  src: url('../../public/fonts/Gilroy-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy-SemiBold';
+  src: url('../../public/fonts/Gilroy-SemiBold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy-Bold';
+  src: url('../../public/fonts/Gilroy-Bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy-ExtraBold';
+  src: url('../../public/fonts/Gilroy-ExtraBold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

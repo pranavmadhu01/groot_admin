@@ -14,6 +14,11 @@ const homeHeaderStyles = createStyles((theme) => ({
     },
   },
 
+  button: {
+    fontFamily: "Gilroy-Medium",
+    letterSpacing: "0.5px",
+  },
+
   burger: {
     [theme.fn.largerThan("xs")]: {
       display: "none",
@@ -31,7 +36,7 @@ const homeHeaderStyles = createStyles((theme) => ({
         ? theme.colors.dark[0]
         : theme.colors.gray[7],
     fontSize: theme.fontSizes.sm,
-    fontWeight: 500,
+    fontFamily: "Gilroy-Medium",
 
     "&:hover": {
       backgroundColor:

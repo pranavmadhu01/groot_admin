@@ -9,6 +9,7 @@ const links = [
   { link: "#about", label: "About" },
   { link: "#contact", label: "Contact Us" },
 ];
+
 export function HomeHeader() {
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
@@ -49,8 +50,8 @@ export function HomeHeader() {
           variant="gradient"
           h={30}
           gradient={{ from: "#6EAF1F", to: "#9ECC66", deg: 105 }}
-          leftIcon={<IconBrandGooglePlay />}
-        >
+          className={cx(classes.button)}
+          >
           Download
         </Button>
       </Container>
